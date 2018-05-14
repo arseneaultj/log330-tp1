@@ -6,17 +6,19 @@ import (
 	"fmt"
 	"log"
 	"strconv"
+	"math"
 )
 
 func main() {
 
-	data := readCsv(os.Args[1])
-	for d := range data {
-		fmt.Println(data[d])
-	}
+	values := readCsv(os.Args[1])
 
-	average := getAverage(data)
-	fmt.Println(average)
+	moyenne := getAverage(values)
+	variance := getVariance(values)
+	ecartType := math.Sqrt(variance)
+	fmt.Printf("Moyenne : %v\n", moyenne)
+	fmt.Printf("Variance : %v\n", variance)
+	fmt.Printf("Ecart type : %v\n", ecartType)
 
 }
 
@@ -50,4 +52,21 @@ func getAverage(values []int) float64{
 		total += value
 	}
 	return float64(total)/float64(len(values))
+}
+
+func getTotalSquaredDistance(values[]int) float64{
+
+	var totalDist float64
+	totalDist = 0
+	average := getAverage(values)
+
+	for _,value := range values {
+		totalDist += (average-float64(value))*(average-float64(value))
+	}
+
+	return totalDist
+}
+
+func getVariance(values []int) float64{
+	return getTotalSquaredDistance(values)*float64(len(values))
 }
