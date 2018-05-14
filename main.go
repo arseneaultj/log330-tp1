@@ -14,6 +14,10 @@ func main() {
 	for d := range data {
 		fmt.Println(data[d])
 	}
+
+	average := getAverage(data)
+	fmt.Println(average)
+
 }
 
 func readCsv(path string) [] int{
@@ -37,4 +41,13 @@ func readCsv(path string) [] int{
 	}
 
 	return values
+}
+
+func getAverage(values []int) float64{
+
+	total := 0
+	for _,value := range values{
+		total += value
+	}
+	return float64(total)/float64(len(values))
 }
