@@ -17,8 +17,8 @@ func main() {
 	variance := getVariance(values)
 	ecartType := math.Sqrt(variance)
 	fmt.Printf("Moyenne : %v\n", moyenne)
-	fmt.Printf("Variance : %v\n", variance)
-	fmt.Printf("Ecart type : %v\n", ecartType)
+	fmt.Printf("Variance : %.4f\n", variance)
+	fmt.Printf("Ecart type : %.2f\n", ecartType)
 
 }
 
@@ -68,5 +68,5 @@ func getTotalSquaredDistance(values[]int) float64{
 }
 
 func getVariance(values []int) float64{
-	return getTotalSquaredDistance(values)*float64(len(values))
+	return getTotalSquaredDistance(values)*1/(float64(len(values)-1))
 }
