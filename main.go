@@ -5,14 +5,20 @@ import (
 	"os"
 	"fmt"
 	"log"
+	"strconv"
 )
 
 func main() {
 
-	readCsv(os.Args[1])
+	data := readCsv(os.Args[1])
+	for d := range data {
+		fmt.Println(data[d])
+	}
 }
 
 func readCsv(path string) [] int{
+
+	var values []int
 
 	file,err := os.Open(path)
 	if err != nil {
@@ -20,24 +26,15 @@ func readCsv(path string) [] int{
 	}
 
 
+
 	reader := csv.NewReader(file)
 
-	values,_ := reader.ReadAll()
+	lines,_ := reader.ReadAll()
 
-	for i := range values {
-		fmt.Println(values[i])
+	for i := range lines {
+		value,_ := strconv.Atoi(lines[i][0])
+		values = append(values, value)
 	}
 
-	//for {
-	//	line,err := reader.Read()
-	//
-	//	if err == io.EOF {
-	//		break
-	//	} else if err != nil {
-	//		log.Fatal(err)
-	//	}
-	//
-	//	fmt.Println(line[0])
-	//}
-	return nil
+	return values
 }
