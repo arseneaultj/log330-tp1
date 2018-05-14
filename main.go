@@ -3,8 +3,6 @@ package main
 import (
 	"encoding/csv"
 	"os"
-	"bufio"
-	"io"
 	"fmt"
 	"log"
 )
@@ -22,17 +20,24 @@ func readCsv(path string) [] int{
 	}
 
 
-	reader := csv.NewReader(bufio.NewReader(file))
+	reader := csv.NewReader(file)
 
-	for {
-		line, err := reader.Read()
+	values,_ := reader.ReadAll()
 
-		if err == io.EOF {
-			break
-		}
-
-		fmt.Println(line)
+	for i := range values {
+		fmt.Println(values[i])
 	}
 
+	//for {
+	//	line,err := reader.Read()
+	//
+	//	if err == io.EOF {
+	//		break
+	//	} else if err != nil {
+	//		log.Fatal(err)
+	//	}
+	//
+	//	fmt.Println(line[0])
+	//}
 	return nil
 }
