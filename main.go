@@ -9,6 +9,11 @@ import (
 	"math"
 )
 
+type point struct{
+	x float64
+	y float64
+}
+
 func main() {
 
 	values := readCsv(os.Args[1])
