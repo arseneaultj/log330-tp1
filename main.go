@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	"math"
+	//"math"
 )
 
 type point struct{
@@ -17,7 +17,7 @@ type point struct{
 func main() {
 
 	values := readCsv(os.Args[1])
-
+	fmt.Println(values)
 	//moyenne := getAverage(values)
 	//variance := getVariance(values)
 	//ecartType := math.Sqrt(variance)
@@ -36,8 +36,6 @@ func readCsv(path string) [] point{
 		log.Fatal(err)
 	}
 
-
-
 	reader := csv.NewReader(file)
 
 	lines,_ := reader.ReadAll()
@@ -51,9 +49,11 @@ func readCsv(path string) [] point{
 	return values
 }
 
-func getAverage(values []int) float64{
 
-	total := 0
+
+func getAverage(values []float64) float64{
+
+	total := 0.0
 	for _,value := range values{
 		total += value
 	}
