@@ -24,7 +24,7 @@ func TestCT14(t *testing.T){
 
 func TestCT15(t *testing.T){
 
-	testValue := 1.5
+	testValue := 16.0
 	interpretation := evaluateCorrelation(testValue)
 
 	if interpretation != "Correlation invalide" {
