@@ -15,24 +15,12 @@ type point struct{
 }
 
 func main() {
-
 	values := readCsv(os.Args[1])
 	correlation := getCorrelation(values)
-	//var xValues []float64
-	//var yValues []float64
-	//for _,value := range values {
-	//	xValues = append(xValues, value.x)
-	//	yValues = append(yValues, value.y)
-	//}
-	//xAvg := getAverage()
-	fmt.Println(correlation)
+	fmt.Printf("Correlation : %.8f\n",correlation)
+	fmt.Println("La correlation est " + evaluateCorrelation(correlation))
 
-	//moyenne := getAverage(values)
-	//variance := getVariance(values)
-	//ecartType := math.Sqrt(variance)
-	//fmt.Printf("Moyenne : %v\n", moyenne)
-	//fmt.Printf("Variance : %.4f\n", variance)
-	//fmt.Printf("Ecart type : %.2f\n", ecartType)
+
 
 }
 
