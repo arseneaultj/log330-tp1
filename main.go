@@ -6,7 +6,7 @@ import (
 	"fmt"
 	"log"
 	"strconv"
-	//"math"
+	"math"
 )
 
 type point struct{
@@ -17,15 +17,15 @@ type point struct{
 func main() {
 
 	values := readCsv(os.Args[1])
-	var xValues []float64
-	var yValues []float64
-	for _,value := range values {
-		xValues = append(xValues, value.x)
-		yValues = append(yValues, value.y)
-	}
+	correlation := getCorrelation(values)
+	//var xValues []float64
+	//var yValues []float64
+	//for _,value := range values {
+	//	xValues = append(xValues, value.x)
+	//	yValues = append(yValues, value.y)
+	//}
 	//xAvg := getAverage()
-	fmt.Println(absolute(14.3))
-	fmt.Println(yValues)
+	fmt.Println(correlation)
 
 	//moyenne := getAverage(values)
 	//variance := getVariance(values)
@@ -36,7 +36,39 @@ func main() {
 
 }
 
-func getCorrelation(points []point){
+func getCorrelation(points []point) float64{
+	n := float64(len(points))
+	var xValues []float64
+	var yValues []float64
+	xSum := 0.0
+	ySum := 0.0
+	x2Sum := 0.0
+	y2Sum := 0.0
+
+	top := 0.0
+
+	for _,value := range points {
+		xValues = append(xValues, value.x)
+		yValues = append(yValues, value.y)
+		xSum += value.x
+		ySum += value.y
+		x2Sum += value.x*value.x
+		y2Sum += value.y*value.y
+
+		}
+	xAvg := getFAverage(xValues)
+	yAvg := getFAverage(yValues)
+
+	for _,value := range points {
+		top += (value.x-xAvg)*(value.y-yAvg)
+	}
+
+	bottom := (n*x2Sum-(xSum*xSum))*(n*y2Sum-(ySum*ySum))
+
+
+	r := (n*top)/math.Sqrt(bottom)
+
+	return r
 
 }
 
@@ -115,6 +147,32 @@ func getTotalSquaredDistance(values[]int) float64{
 
 	for _,value := range values {
 		totalDist += (average-float64(value))*(average-float64(value))
+	}
+
+	return totalDist
+}
+
+func getTotalFSquaredDistance(values[]float64) float64{
+
+	var totalDist float64
+	totalDist = 0
+	average := getFAverage(values)
+
+	for _,value := range values {
+		totalDist += (average-value)*(average-value)
+	}
+
+	return totalDist
+}
+
+func getTotalDistance(values[]float64) float64{
+
+	var totalDist float64
+	totalDist = 0
+	average := getFAverage(values)
+
+	for _,value := range values {
+		totalDist += absolute(average-value)
 	}
 
 	return totalDist
