@@ -22,12 +22,12 @@ func TestCT14(t *testing.T){
 	}
 }
 
-func TestCT15(t *testing.T){
-
-	testValue := 16.0
-	interpretation := evaluateCorrelation(testValue)
-
-	if interpretation != "Correlation invalide" {
-		t.Errorf("Expected Correlation invalide but got %v instead", interpretation)
-	}
-}
+//func TestCT15(t *testing.T){
+//
+//	testValue := 16.0
+//	interpretation := evaluateCorrelation(testValue)
+//
+//	if interpretation != "Correlation invalide" {
+//		t.Errorf("Expected Correlation invalide but got %v instead", interpretation)
+//	}
+//}
