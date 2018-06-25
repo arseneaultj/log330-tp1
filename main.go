@@ -14,13 +14,28 @@ type point struct{
 	y float64
 }
 
+type line struct{
+	slope float64
+	constant float64
+}
+
 func main() {
 	values := readCsv(os.Args[1])
-	fmt.Println(getConstant(values))
+	line := line{getSlope(values), getConstant(values)}
+	fmt.Println(line)
 	//correlation := getCorrelation(values)
 	//fmt.Printf("Correlation : %.8f\n",correlation)
 	//fmt.Println("La correlation est " + evaluateCorrelation(correlation))
 }
+
+func getY(x float64, line line) float64{
+	return line.slope*x + line.constant
+}
+
+func getX(y float64, line line) float64{
+	return y/line.slope - line.constant
+}
+
 func getPointsAverage(points []point) [2]float64{
 	var xValues []float64
 	var yValues []float64
