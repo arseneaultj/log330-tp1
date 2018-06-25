@@ -16,7 +16,7 @@ type point struct{
 
 func main() {
 	values := readCsv(os.Args[1])
-	fmt.Println(getSlope(values))
+	fmt.Println(getConstant(values))
 	//correlation := getCorrelation(values)
 	//fmt.Printf("Correlation : %.8f\n",correlation)
 	//fmt.Println("La correlation est " + evaluateCorrelation(correlation))
@@ -50,9 +50,12 @@ func getSlope(points []point) float64 {
 	return top/bottom
 }
 
-//func getConstant(points []point) float64{
-//
-//}
+func getConstant(points []point) float64{
+	averages := getPointsAverage(points)
+	slope := getSlope(points)
+
+	return averages[1] - slope*averages[0]
+}
 
 func getCorrelation(points []point) float64{
 	n := float64(len(points))
