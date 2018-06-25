@@ -19,9 +19,6 @@ func main() {
 	correlation := getCorrelation(values)
 	fmt.Printf("Correlation : %.8f\n",correlation)
 	fmt.Println("La correlation est " + evaluateCorrelation(correlation))
-
-
-
 }
 
 func getCorrelation(points []point) float64{
@@ -82,8 +79,11 @@ func evaluateCorrelation(correl float64) string{
 	}
 	if r < 0.9 {
 		return "Forte à très forte"
-	} else {
+	}
+	if r <= 1{
 		return "Très forte à parfaite"
+	}else {
+		return "Correlation invalide"
 	}
 }
 
