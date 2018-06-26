@@ -24,7 +24,7 @@ type line struct{
 func main() {
 	values := readCsv(os.Args[1])
 	line := line{getSlope(values), getConstant(values)}
-	fmt.Println(line)
+	fmt.Printf("y = %.3fx + %.3f\n",line.slope,line.constant)
 	inputs := readUserInput()
 	if inputs[0] == 0 {
 		fmt.Printf("y = %.8f\n",getY(inputs[1],line))
