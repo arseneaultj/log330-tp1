@@ -7,6 +7,8 @@ import (
 	"log"
 	"strconv"
 	"math"
+	"bufio"
+	"strings"
 )
 
 type point struct{
@@ -23,9 +25,36 @@ func main() {
 	values := readCsv(os.Args[1])
 	line := line{getSlope(values), getConstant(values)}
 	fmt.Println(line)
-	//correlation := getCorrelation(values)
-	//fmt.Printf("Correlation : %.8f\n",correlation)
-	//fmt.Println("La correlation est " + evaluateCorrelation(correlation))
+	inputs := readUserInput()
+	if inputs[0] == 0 {
+		fmt.Printf("y = %.8f\n",getY(inputs[1],line))
+	} else {
+		fmt.Printf("x = %.8f\n",getX(inputs[1],line))
+	}
+}
+
+func readUserInput() [2]float64{
+	reader := bufio.NewReader(os.Stdin)
+	choice := ""
+	for strings.Compare(choice, "x") != 0 && strings.Compare(choice, "y") != 0{
+		fmt.Print("Choose variable to input(x or y) : ")
+		val,_ := reader.ReadString('\n')
+		choice = strings.Replace(val, "\r\n", "", -1)
+	}
+
+	value,err := strconv.ParseFloat("a",64) //generate error
+	for err != nil {
+		fmt.Println("Enter value for " + choice)
+		val,_ := reader.ReadString('\n')
+		val = strings.Replace(val, "\r\n", "", -1)
+		value,err = strconv.ParseFloat(val,64)
+	}
+
+	if choice == "x" {
+		return [2]float64{0,value}
+	} else {
+		return [2]float64{1,value}
+	}
 }
 
 func getY(x float64, line line) float64{
