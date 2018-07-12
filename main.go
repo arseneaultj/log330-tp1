@@ -35,16 +35,7 @@ func main() {
 		fmt.Printf("Correlation semaine %d : %.5f ( %s )\n",
 			i+1,correl,evaluateCorrelation(correl))
 	}
-
-
-	//line := line{getSlope(values), getConstant(values)}
-	//fmt.Printf("y = %.3fx + %.3f\n",line.slope,line.constant)
-	//inputs := readUserInput()
-	//if inputs[0] == 0 {
-	//	fmt.Printf("y = %.8f\n",getY(inputs[1],line))
-	//} else {
-	//	fmt.Printf("x = %.8f\n",getX(inputs[1],line))
-	//}
+	
 }
 
 func readUserInput() [2]float64{
