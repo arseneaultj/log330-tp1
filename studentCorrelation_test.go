@@ -3,7 +3,6 @@ package main
 
 import (
 "testing"
-	"math"
 )
 
 func TestCT31(t *testing.T){
