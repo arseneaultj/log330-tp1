@@ -29,7 +29,14 @@ type student struct{
 
 func main() {
 	values := readCsv(os.Args[1])
-	fmt.Println(values)
+
+	for i := 0; i < 6; i++ {
+		correl := getStudentCorrelation(values,i)
+		fmt.Printf("Correlation semaine %d : %.5f ( %s )\n",
+			i+1,correl,evaluateCorrelation(correl))
+	}
+
+
 	//line := line{getSlope(values), getConstant(values)}
 	//fmt.Printf("y = %.3fx + %.3f\n",line.slope,line.constant)
 	//inputs := readUserInput()
@@ -106,6 +113,19 @@ func getConstant(points []point) float64{
 	slope := getSlope(points)
 
 	return averages[1] - slope*averages[0]
+}
+
+func getStudentCorrelation(student []student, week int) float64{
+	var points []point
+	for _,stud := range student {
+		points = append(points, studentToPoint(stud,week))
+	}
+
+	return  getCorrelation(points)
+}
+
+func studentToPoint(student student, week int) point{
+	return point{student.effort[week],student.grade}
 }
 
 func getCorrelation(points []point) float64{
