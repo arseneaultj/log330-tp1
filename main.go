@@ -21,16 +21,23 @@ type line struct{
 	constant float64
 }
 
+type student struct{
+	name string
+	effort [6]float64
+	grade float64
+}
+
 func main() {
 	values := readCsv(os.Args[1])
-	line := line{getSlope(values), getConstant(values)}
-	fmt.Printf("y = %.3fx + %.3f\n",line.slope,line.constant)
-	inputs := readUserInput()
-	if inputs[0] == 0 {
-		fmt.Printf("y = %.8f\n",getY(inputs[1],line))
-	} else {
-		fmt.Printf("x = %.8f\n",getX(inputs[1],line))
-	}
+	fmt.Println(values)
+	//line := line{getSlope(values), getConstant(values)}
+	//fmt.Printf("y = %.3fx + %.3f\n",line.slope,line.constant)
+	//inputs := readUserInput()
+	//if inputs[0] == 0 {
+	//	fmt.Printf("y = %.8f\n",getY(inputs[1],line))
+	//} else {
+	//	fmt.Printf("x = %.8f\n",getX(inputs[1],line))
+	//}
 }
 
 func readUserInput() [2]float64{
@@ -167,9 +174,10 @@ func evaluateCorrelation(correl float64) string{
 	}
 }
 
-func readCsv(path string) [] point{
 
-	var values []point
+func readCsv(path string) []student{
+
+	var values []student
 
 	file,err := os.Open(path)
 	if err != nil {
@@ -181,11 +189,14 @@ func readCsv(path string) [] point{
 	lines,_ := reader.ReadAll()
 
 	for i := range lines {
-		x,_ := strconv.ParseFloat(lines[i][0],64)
-		y,_ := strconv.ParseFloat(lines[i][1],64)
-		values = append(values, point{x,y})
+		name:= lines[i][0]
+		var effort [6]float64
+		for j := 1; j < 7; j++ {
+			effort[j-1],_ = strconv.ParseFloat(lines[i][j],64)
+		}
+		grade,_ := strconv.ParseFloat(lines[i][7],64)
+		values = append(values, student{name,effort,grade})
 	}
-
 	return values
 }
 
