@@ -62,13 +62,16 @@ func readUserInput() [2]float64{
 	}
 }
 
-func getY(x float64, line line) float64{
+
+
+func (line line) getY(x float64) float64{
 	return line.slope*x + line.constant
 }
 
-func getX(y float64, line line) float64{
+func (line line)getX(y float64) float64{
 	return y/line.slope - line.constant
 }
+
 
 func getPointsAverage(points []point) [2]float64{
 	var xValues []float64
