@@ -11,6 +11,9 @@ import (
 	"strings"
 )
 
+const alpha70, alpha90 = 1.108, 1.860
+const xk = 1119
+
 type point struct{
 	x float64
 	y float64
@@ -29,17 +32,14 @@ type student struct{
 
 func main() {
 	values := readCsv(os.Args[1])
-	stdDev  := getStdDev(values)
+	line := line{getSlope(values),getConstant(values)}
+	interval70 := getInterval(values,alpha70,1119)
+	interval90 := getInterval(values,alpha90,1119)
+	predictionLoc := line.getY(xk)
+	fmt.Printf("Interval(α=0.9) : [%.5f - %.5f] \nInterval(α=0.7) : [%.5f - %.5f] \n ",
+			predictionLoc-interval90, predictionLoc+interval90, predictionLoc-interval70, predictionLoc+interval70)
 
-
-	//for i := 0; i < 6; i++ {
-	//	correl := getStudentCorrelation(values,i)
-	//	fmt.Printf("Correlation semaine %d : %.5f ( %s )\n",
-	//		i+1,correl,evaluateCorrelation(correl))
-	//}
-	
 }
-
 
 func getStdDev(points []point) float64{
 	line := line{getSlope(points),getConstant(points)}
@@ -49,6 +49,14 @@ func getStdDev(points []point) float64{
 		sum += dist*dist
 	}
 	return math.Sqrt(1/float64(len(points)-1)*sum)
+}
+
+func getInterval(points []point, alpha float64,xk int)float64{
+	avgX := getFAverage(getAllX(points))
+	top := float64(xk)-avgX
+
+	interval := alpha*getStdDev(points)*math.Sqrt(1 + 1.0/float64(len(points)) + (top*top)/getTotalFSquaredDistance(getAllX(points)))
+	return interval
 }
 
 func readUserInput() [2]float64{
@@ -75,7 +83,13 @@ func readUserInput() [2]float64{
 	}
 }
 
-
+func getAllX(points []point)[]float64{
+	var values []float64
+	for _,point := range points {
+		values = append(values,point.x)
+	}
+	return values
+}
 
 func (line line) getY(x float64) float64{
 	return line.slope*x + line.constant
