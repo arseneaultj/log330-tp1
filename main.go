@@ -36,9 +36,18 @@ func main() {
 	interval70 := getInterval(values,alpha70,1119)
 	interval90 := getInterval(values,alpha90,1119)
 	predictionLoc := line.getY(xk)
-	fmt.Printf("Interval(α=0.9) : [%.5f - %.5f] \nInterval(α=0.7) : [%.5f - %.5f] \n ",
+	fmt.Printf("Interval(α=0.9) : [%.5f - %.5f] \nInterval(α=0.7) : [%.5f - %.5f]",
 			predictionLoc-interval90, predictionLoc+interval90, predictionLoc-interval70, predictionLoc+interval70)
 
+}
+
+func round(num float64) int {
+	return int(num + math.Copysign(0.5, num))
+}
+
+func toFixed(num float64, precision int) float64 {
+	output := math.Pow(10, float64(precision))
+	return float64(round(num * output)) / output
 }
 
 func getStdDev(points []point) float64{
